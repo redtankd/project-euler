@@ -9,14 +9,15 @@ fn main() {
 	let mut lengths: HashMap<u64, u64> = HashMap::new();
 	lengths.insert(1, 1);
 
-	for i in (0..MAX_NUMBER).rev() {
+	for i in (1..MAX_NUMBER).rev() {
+		// println!("i={:?}", i);
 		ff(i, &mut lengths);
 	}
 
 	let mut max = 0;
 	let mut number = 0;
-	for (nn, nlengths) in lengths {
-		if nn <= MAX_NUMBER && nlengths > max { max = nlengths; number = nn} 
+	for (n, length) in lengths {
+		if n < MAX_NUMBER && length > max { max = length; number = n} 
 	}
 	println!("{} has the the max length {:?}", number, max);
 }
