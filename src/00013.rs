@@ -1,6 +1,4 @@
 
-use std::str::FromStr;
-
 fn main() {
     let strs = [
         "37107287533902102798797998220837590246510135740250",
@@ -107,13 +105,15 @@ fn main() {
 
     let mut a = [0u64; 5];
 
-    for s in strs.iter() {
+    // The trait IntoInterator is implemented for [T; $N], $N=1...32.
+    // So [&str; 100] needs to call iter().
+    for s in strs.iter() { 
         for i in 0..5 {
-            a[4-i] += FromStr::from_str(s.slice(i*10, (i+1)*10)).unwrap();
+            a[4-i] += s[i*10..(i+1)*10].parse::<u64>().unwrap();
         }
     }
 
-    println!("{:?}", a.iter().fold(0, |sum, &x| sum/10000000000 + x).to_string().slice(0,10));
+    println!("{:?}", &(a.iter().fold(0, |sum, &x| sum/10000000000 + x).to_string())[0..10]);
 }
 
 

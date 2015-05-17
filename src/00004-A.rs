@@ -7,7 +7,7 @@ fn main() {
             let p = i*j;
             if p < max.0 { continue; }
             let str = p.to_string();
-            let strs = str.as_slice();
+            let strs = &str;
             if strs.chars().rev().collect::<String>() == str {
                 max = (p, i, j);
             }
