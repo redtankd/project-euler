@@ -1,5 +1,10 @@
+extern crate project_euler;
+
+use project_euler::*;
 
 fn main() {
+    let t = start_timer();
+
     let mut it: Vec<(u32, u32)> = Vec::new();
     for i in (100..1000).rev() {
         for j in (100..i).rev() {
@@ -22,4 +27,6 @@ fn main() {
     }
 
     println!("{}", max);
+
+    stop_timer(t);
 }

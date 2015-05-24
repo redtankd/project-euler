@@ -2,3 +2,6 @@
 name = "project-euler"
 version = "0.1.0"
 authors = ["redtankd <redtankd@qq.com>"]
+
+[dependencies]
+time = "^0.1"

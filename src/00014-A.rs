@@ -1,6 +1,11 @@
+extern crate project_euler;
+
+use project_euler::*;
 use std::collections::HashMap;
 
 fn main() {
+	let t = start_timer();
+
 	const MAX_NUMBER : u64 = 999999;
 
 	// the sequence's length for all numbers
@@ -39,6 +44,8 @@ fn main() {
 		if nn <= MAX_NUMBER && nlengths > max { max = nlengths; number = nn} 
 	}
 	println!("{} has the the max length {:?}", number, max);
+
+	stop_timer(t);
 }
 
 fn f(n: u64) -> u64 {

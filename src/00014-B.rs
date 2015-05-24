@@ -1,8 +1,12 @@
+extern crate project_euler;
+
+use project_euler::*;
 use std::collections::HashMap;
 
 const MAX_NUMBER: u64 = 1000000;
 
 fn main() {
+	let t = start_timer();
 	
 	// the sequence's length for all numbers
 	// it is a cache
@@ -20,6 +24,8 @@ fn main() {
 		if n < MAX_NUMBER && length > max { max = length; number = n} 
 	}
 	println!("{} has the the max length {:?}", number, max);
+
+	stop_timer(t);
 }
 
 fn ff(n: u64, lengths: &mut HashMap<u64, u64>) -> (u64, &mut HashMap<u64, u64>) {
