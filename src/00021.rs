@@ -37,9 +37,7 @@ fn s2() -> u64 {
     let mut dn_all = vec![0; 10001];
 
     (1..10001)
-    .inspect(|&n| { 
-        dn_all[n as usize] = f(n);
-    })
+    .inspect(|&n| dn_all[n as usize] = f(n) )
     .collect::<Vec<u64>>()
     .iter()
     .filter(|&&n| {
