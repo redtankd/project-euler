@@ -37,20 +37,26 @@ fn s1() -> u64 {
 }
 
 fn s2() -> u64 {
+    let mut fn_1 = vec![0 as u8; 1000];
+    let mut fn_2 = vec![0 as u8; 1000];
+    fn_1[0] = 1;
+    fn_2[0] = 1;
+
     (3..)
-    .scan( (vec![0 as u8; 1000], vec![0 as u8; 1000]), 
+    .scan( (Some(fn_1), fn_2),  
         |&mut(ref mut fn_1, ref mut fn_2), x| {
 
-        if x == 3 { 
-            fn_1[0] = 1; 
-            fn_2[0] = 1;
-        }
+        // fn_1 is borrowed content, so we can't transfer ownership.
+        // because this would leave the fn_1 in an inconsistent state.
+        // In this case, you can use Option::take. This will leave 
+        // the variable where it is, changing it in-place without moving it.
+        let _fn_1 = fn_1.take().unwrap();
 
-        let fn_ = add(&fn_1, &fn_2);
+        let fn_ = add(&_fn_1, &fn_2);
         if fn_[999] != 0 { return None; }
         else { 
-            *fn_2 = (*fn_1).clone(); // with scan, we lost ownership
-            *fn_1 = fn_;
+            *fn_2 = _fn_1; 
+            *fn_1 = Some(fn_);
             return Some(x); 
         }
     })
