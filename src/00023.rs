@@ -18,8 +18,6 @@ fn s1() -> u64 {
         .filter(|&x| f(x).iter().fold(0, |sum, y| sum + y) > x )
         .collect::<Vec<u64>>();
 
-    println!("{:p}", abundant[0]);  
-
     abundant
     .iter()                         // which iterates over &T
     .enumerate()
