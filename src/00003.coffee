@@ -1,7 +1,7 @@
 console.time("Largest prime factor")
 
 f = (n, x) ->
-    if n == 1
+    if n == 1 || x == 1
         1
     else if n % x == 0
         f n / x, x
