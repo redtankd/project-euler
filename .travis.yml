@@ -35,4 +35,4 @@ after_success: |
     make && 
     make install && 
     cd ../.. && 
-    kcovrun 
+    src/kcovrun 
