@@ -1,0 +1,15 @@
+#!/bin/ksh
+
+for file in src/bin/*.rs
+do
+    prg=`basename ${file%.*}`
+    if test -f target/debug/$prg-*
+    then
+        kcov --verify \
+            --coveralls-id=$TRAVIS_JOB_ID \
+            --exclude-pattern=/.cargo \
+            target/kcov target/debug/$prg-*
+    fi
+done
+
+ 

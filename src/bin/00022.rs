@@ -10,7 +10,7 @@ fn main() {
     let t = start_timer();
 
     println!("\nsolution 1:\n");
-    println!("sum={}\n", s1("src/00022.txt"));
+    println!("sum={}\n", s1("src/resource/00022.txt"));
 
     stop_timer(t);
 }
@@ -41,5 +41,5 @@ fn s1(name: &str) -> u64 {
 
 #[test]
 fn s1_test() {
-    assert_eq!(871198282, s1("src/00022.txt"));
+    assert_eq!(871198282, s1("src/resource/00022.txt"));
 }

@@ -10,7 +10,7 @@ use project_euler::*;
 type MyType = i32;
 
 fn main() {
-    let (line_count, lines) = read_file("00018.txt");
+    let (line_count, lines) = read_file("resource/00018.txt");
 
     let t = start_timer();
 
@@ -27,7 +27,7 @@ fn main() {
 
     //-------------------------------------------------
 
-    let (line_count, lines) = read_file("00067.txt");
+    let (line_count, lines) = read_file("resource/00067.txt");
 
     let t = start_timer();
 
@@ -116,9 +116,9 @@ fn s1(line_count: usize, data_lines: Vec<Vec<MyType>>)
 
 #[test]
 fn s1_test() {
-    let (line_count, lines) = read_file("src/00018.txt");
+    let (line_count, lines) = read_file("src/resource/00018.txt");
     assert_eq!(1074, s1(line_count, lines).0);
 
-    let (line_count, lines) = read_file("src/00067.txt");
+    let (line_count, lines) = read_file("src/resource/00067.txt");
     assert_eq!(7273, s1(line_count, lines).0);
 }
