@@ -10,6 +10,7 @@ rust:
 env:
   global:
     - LOCAL="~/.local"  # install here to avoid `sudo`
+    - RUSTFLAGS='-C link-dead-code'
   matrix:
     - TEST_DIR="."
       PKGNAME="project-euler"    # must match with cargo.toml
