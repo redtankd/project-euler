@@ -42,7 +42,7 @@ fn s2() -> u64 {
     fn_1[0] = 1;
     fn_2[0] = 1;
 
-    (3..)
+    (3 as u64..)
     .scan( (Some(fn_1), fn_2),  
         |&mut(ref mut fn_1, ref mut fn_2), x| {
 
