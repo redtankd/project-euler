@@ -3,4 +3,4 @@
 # this script's parent dir
 GOPATH=`pwd`/`dirname "$0"`/..
 
-go run $@
+go test -run=$1

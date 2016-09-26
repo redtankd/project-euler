@@ -9,8 +9,8 @@ rust:
 
 env:
   global:
-    - LOCAL="~/.local"  # install here to avoid `sudo`
-    - RUSTFLAGS='-C link-dead-code'
+    - LOCAL="~/.local"  # install kcov here to avoid `sudo`
+    - RUSTFLAGS='-C link-dead-code' # for code coverage analysis, because rustc strip dead code
   matrix:
     - TEST_DIR="."
       PKGNAME="project-euler"    # must match with cargo.toml
