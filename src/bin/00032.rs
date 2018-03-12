@@ -1,4 +1,6 @@
 #![feature(test)]
+#![feature(conservative_impl_trait)]
+#![feature(universal_impl_trait)]
 
 extern crate test;
 extern crate project_euler;
@@ -16,22 +18,29 @@ fn main() {
 
 fn s1() -> u32 {
     // permutation for 1..10
-    let mut p = vec![(Vec::new(), (1..10).collect::<Vec<u32>>())];
-    for _ in 1..10 {
-        p = p
-            .iter()
-            .flat_map(|&(ref p, ref left)| { draw_digit(p, left) })
-            .collect::<Vec<(Vec<u32>, Vec<u32>)>>();
-    }
-
-    // find products
-    let mut p = p.iter()
-        .flat_map(|&(ref p, _)| {
+    let p = vec![(Vec::new(), (1..10).collect::<Vec<u32>>())];
+    let p_iter = p.into_iter()
+        .flat_map(|(drawn, to_draw)| { draw_digit(drawn, to_draw) })
+        .flat_map(|(drawn, to_draw)| { draw_digit(drawn, to_draw) })
+        .flat_map(|(drawn, to_draw)| { draw_digit(drawn, to_draw) })
+        .flat_map(|(drawn, to_draw)| { draw_digit(drawn, to_draw) })
+        .flat_map(|(drawn, to_draw)| { draw_digit(drawn, to_draw) })
+        .flat_map(|(drawn, to_draw)| { draw_digit(drawn, to_draw) })
+        .flat_map(|(drawn, to_draw)| { draw_digit(drawn, to_draw) })
+        .flat_map(|(drawn, to_draw)| { draw_digit(drawn, to_draw) })
+        .flat_map(|(drawn, to_draw)| { draw_digit(drawn, to_draw) });
+    
+    //find products
+    let mut p = p_iter
+        .flat_map(|(p, _)| {
             let mut products: Vec<u32> = Vec::new();
             let a = p[0]*10  + p[1];
             let b = p[2]*100 + p[3]*10 + p[4]; 
             let c = p[5]*1000+ p[6]*100+ p[7]*10 + p[8]; 
-            if a*b == c { println!("{} * {} ={}", a, b, c);products.push(c); }
+            if a*b == c { 
+                // println!("{} * {} ={}", a, b, c);
+                products.push(c); 
+            }
             
             // the same value in the different sequence
             // let a = p[0]*100 + p[1]*10 + p[2];
@@ -42,7 +51,10 @@ fn s1() -> u32 {
             let a = p[0];
             let b = p[1]*1000 + p[2]*100 + p[3]*10 + p[4]; 
             let c = p[5]*1000 + p[6]*100 + p[7]*10 + p[8]; 
-            if a*b == c { println!("{} * {} = {}", a, b, c);products.push(c); }
+            if a*b == c { 
+                // println!("{} * {} = {}", a, b, c);
+                products.push(c); 
+            }
 
             products
         })
@@ -54,17 +66,28 @@ fn s1() -> u32 {
     p.iter().sum()
 }
 
-// p - the drawn digits
-// digits - the digits to draw
-fn draw_digit(p: &Vec<u32>, digits: &Vec<u32>) -> Vec<(Vec<u32>, Vec<u32>)> {
-    digits.iter().enumerate().map(|(i, _)| {
-        let mut digits_new = digits.to_vec();
-        let next = digits_new.remove(i);
-        let mut p_new = p.to_vec();
-        p_new.push(next);
-        (p_new, digits_new)
-        })
-    .collect()
+// Don't know how to solve at this moment
+// fn my_flat_map<I, U, F>(iter: impl Iterator<Item=(Vec<u32>, Vec<u32>)>)
+//     -> FlatMap<I, U, F> 
+//     where 
+//         I: Iterator<Item=(Vec<u32>, Vec<u32>)>,
+//         U: Iterator,
+//         F: FnMut(I::Item) -> U
+// {
+//     iter.flat_map(|(drawn, to_draw)| { draw_digit(drawn, to_draw) })
+// }
+
+// drawn - the drawn digits
+// to_draw - the digits to draw
+fn draw_digit(drawn: Vec<u32>, to_draw: Vec<u32>) 
+    -> impl Iterator<Item=(Vec<u32>, Vec<u32>)> {
+    (0..to_draw.len()).map(move |i| {
+        let mut left = to_draw.to_vec();
+        let next = left.remove(i);
+        let mut drawn_new = drawn.to_vec();
+        drawn_new.push(next);
+        (drawn_new, left)
+    })
 }
 
 #[cfg(test)]
