@@ -19,7 +19,6 @@ addons:
       - libelf-dev
       - libdw-dev
       - binutils-dev
-      - libbfd-dev
       #- libiberty-dev # <- no such thing in Ubuntu 12.04
       - g++
 
