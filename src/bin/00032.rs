@@ -18,18 +18,19 @@ fn main() {
 
 fn s1() -> u32 {
     // permutation for 1..10
+    // the start value: (the drawn result, the collection to draw)
     let p = vec![(Vec::new(), (1..10).collect::<Vec<u32>>())];
-    let p_iter = p.into_iter()
-        .flat_map(|(drawn, to_draw)| { draw_digit(drawn, to_draw) })
-        .flat_map(|(drawn, to_draw)| { draw_digit(drawn, to_draw) })
-        .flat_map(|(drawn, to_draw)| { draw_digit(drawn, to_draw) })
-        .flat_map(|(drawn, to_draw)| { draw_digit(drawn, to_draw) })
-        .flat_map(|(drawn, to_draw)| { draw_digit(drawn, to_draw) })
-        .flat_map(|(drawn, to_draw)| { draw_digit(drawn, to_draw) })
-        .flat_map(|(drawn, to_draw)| { draw_digit(drawn, to_draw) })
-        .flat_map(|(drawn, to_draw)| { draw_digit(drawn, to_draw) })
-        .flat_map(|(drawn, to_draw)| { draw_digit(drawn, to_draw) });
-    
+    // rust can't loop with FlatMap because FlatMap's type augment FnMut.
+    // so cast it to a trait object.
+    let mut p_iter = Box::new(p.into_iter()) 
+        as Box<Iterator<Item=(Vec<u32>, Vec<u32>)>>;
+    for _ in 0..9 {
+        p_iter = Box::new(p_iter.flat_map(|(drawn, to_draw)| { 
+                draw_digit(drawn, to_draw) 
+            })
+        );
+    }
+
     //find products
     let mut p = p_iter
         .flat_map(|(p, _)| {

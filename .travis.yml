@@ -27,8 +27,8 @@ install:
     - mkdir -p ~/.cargo/bin
     - mkdir -p ~/.local/bin
 
-    # 1. Install kcov v33.
-    - export KCOV_VERSION=33
+    # 1. Install kcov v34.
+    - export KCOV_VERSION=34
     - |
         wget https://github.com/SimonKagstrom/kcov/archive/v${KCOV_VERSION}.tar.gz &&
         tar xzf v${KCOV_VERSION}.tar.gz &&
@@ -47,4 +47,5 @@ install:
 after_success: |
   cargo kcov --verbose -- --verify --coveralls-id=$TRAVIS_JOB_ID \
     --strip-path=$TRAVIS_BUILD_DIR \
-    --exclude-pattern=/.cargo,target 
+    --exclude-pattern=/.cargo,target \
+    --exclude-region="#[cfg(test)]"
