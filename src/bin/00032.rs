@@ -1,6 +1,5 @@
 #![feature(test)]
 #![feature(conservative_impl_trait)]
-#![feature(universal_impl_trait)]
 
 extern crate test;
 extern crate project_euler;
