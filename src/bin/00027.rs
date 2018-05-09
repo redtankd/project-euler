@@ -1,6 +1,6 @@
-#![feature(test)]
+#![cfg_attr(all(feature = "nightly", test), feature(test))]
+#[cfg(all(feature = "nightly", test))] extern crate test;
 
-extern crate test;
 extern crate project_euler;
 
 use std::collections::HashSet;
@@ -142,7 +142,6 @@ pub fn primes(max: MyInt) -> HashSet<MyInt> {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use test::Bencher;
 
     #[test]
     fn test() {
@@ -160,6 +159,12 @@ mod tests {
         assert_eq!(71, n);
         assert_eq!(-59231, a * b);
     }
+}
+
+#[cfg(all(feature = "nightly", test))]
+mod benchs {
+    use super::*;
+    use test::Bencher;
 
     #[bench]
     fn bench_s1(b: &mut Bencher) {

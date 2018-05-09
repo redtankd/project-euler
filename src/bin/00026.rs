@@ -1,6 +1,6 @@
-#![feature(test)]
+#![cfg_attr(all(feature = "nightly", test), feature(test))]
+#[cfg(all(feature = "nightly", test))] extern crate test;
 
-extern crate test;
 extern crate project_euler;
 
 use std::collections::HashMap;
@@ -111,14 +111,19 @@ fn div(dividend: u16, divisor: u16) -> (String, u16) {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use test::Bencher;
-
+    
     #[test]
     fn test_s1() {
         let (wanted, wanted_reciprocal, wanted_len) = s1(1000);
         assert_eq!(983, wanted);
         assert_eq!(982, wanted_len);
     }
+}
+
+#[cfg(all(feature = "nightly", test))]
+mod benchs {
+    use super::*;
+    use test::Bencher;
 
     #[bench]
     fn bench_s1(b: &mut Bencher) {

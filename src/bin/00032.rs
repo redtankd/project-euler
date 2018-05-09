@@ -1,7 +1,3 @@
-#![feature(test)]
-#![feature(conservative_impl_trait)]
-
-extern crate test;
 extern crate project_euler;
 
 use project_euler::*;

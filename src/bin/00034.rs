@@ -1,6 +1,3 @@
-#![feature(test)]
-
-extern crate test;
 extern crate project_euler;
 
 use project_euler::*;

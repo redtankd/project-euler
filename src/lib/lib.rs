@@ -1,5 +1,3 @@
-#![feature(conservative_impl_trait)]
-
 extern crate time;
 
 use time::{ precise_time_s };
