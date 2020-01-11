@@ -2,10 +2,17 @@
 name = "project-euler"
 version = "0.1.0"
 authors = ["redtankd <redtankd@qq.com>"]
+build = "build.rs"
 
 [lib]
 path = "src/lib/lib.rs"
 
 [dependencies]
 time = "^0.1"
-itertools = "0.5.1"
+itertools = "^0.7.7"
+
+[build-dependencies]
+rustc_version = "0.2"
+
+[features]
+nightly = []

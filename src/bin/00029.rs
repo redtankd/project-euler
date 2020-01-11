@@ -1,6 +1,6 @@
-#![feature(test)]
+#![cfg_attr(all(feature = "nightly", test), feature(test))]
+#[cfg(all(feature = "nightly", test))] extern crate test;
 
-extern crate test;
 extern crate project_euler;
 
 use std::ops::*;
@@ -71,7 +71,6 @@ fn carry<T>(number: &mut Vec<T>, ten_unit: T)
 
 #[cfg(test)]
 mod tests {
-    use test::Bencher;
     use super::carry;
     use super::pow;
     use super::s1;
@@ -101,6 +100,14 @@ mod tests {
         assert_eq!(1, d[2]);
         assert_eq!(3, d[3]);
     }
+}
+
+#[cfg(all(feature = "nightly", test))]
+mod benchs {
+    use test::Bencher;
+    use super::carry;
+    use super::pow;
+    use super::s1;
 
     #[bench]
     fn bench_s1(b: &mut Bencher) {

@@ -1,6 +1,6 @@
-#![feature(test)]
+#![cfg_attr(all(feature = "nightly", test), feature(test))]
+#[cfg(all(feature = "nightly", test))] extern crate test;
 
-extern crate test;
 extern crate project_euler;
 
 use project_euler::*;
@@ -74,12 +74,17 @@ fn s1(max: usize) -> usize {
 #[cfg(test)]
 mod tests {
     use super::s1;
-    use test::Bencher;
 
     #[test]
     fn test() {
         assert_eq!(669171001, s1(1001));
     }
+}
+
+#[cfg(all(feature = "nightly", test))]
+mod benchs {
+    use super::s1;
+    use test::Bencher;
 
     #[bench]
     fn bench_s1(b: &mut Bencher) {
