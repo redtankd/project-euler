@@ -33,15 +33,18 @@ script:
 after_success:
   - |
     if [ "$TRAVIS_RUST_VERSION" = "nightly" ]; then
-
-      curl -L https://github.com/mozilla/grcov/releases/latest/download/grcov-linux-x86_64.tar.bz2 | tar jxf -;
+      curl -L https://github.com/mozilla/grcov/releases/latest/download/grcov-linux-x86_64.tar.bz2 | tar jxf -
 
       ./grcov . -s . -t coveralls+  --ignore "$HOME/.cargo/*" --ignore-not-existing \
-        --commit-sha $TRAVIS_COMMIT \
         --service-name travis-ci \
-        --service-number $TRAVIS_BUILD_NUMBER \
-        --service-job-number $TRAVIS_JOB_NUMBER \
-        --token $COVERALLS_REPO_TOKEN > coveralls.json;
+        --service-job-number $TRAVIS_JOB_ID \
+        --service-pull-request $TRAVIS_PULL_REQUEST \
+        --commit-sha $TRAVIS_COMMIT \
+        --vcs-branch $TRAVIS_BRANCH \
+        --token $COVERALLS_REPO_TOKEN > coveralls.json
 
-      curl "https://coveralls.io/api/v1/jobs" -F json_file=@coveralls.json;
+      # Coveralls API requires service_job_id
+      sed -i "s%service_job_number%service_job_id%" coveralls.json
+
+      curl "https://coveralls.io/api/v1/jobs" -F json_file=@coveralls.json
     fi
