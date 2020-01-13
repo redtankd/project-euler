@@ -20,11 +20,11 @@ fn main() {
 fn f(x: u32, y: u32, count: &mut u64) {
     match (x, y) {
         (GRID_DIM, GRID_DIM) => *count += 1,
-        (GRID_DIM, _       ) => f(x, y+1, count),
-        (_,        GRID_DIM) => f(x+1, y, count),
+        (GRID_DIM, _) => f(x, y + 1, count),
+        (_, GRID_DIM) => f(x + 1, y, count),
         _ => {
-            f(x+1, y, count);
-            f(x, y+1, count);
+            f(x + 1, y, count);
+            f(x, y + 1, count);
         }
     }
 }

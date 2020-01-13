@@ -18,7 +18,6 @@ fn main() {
     stop_timer(t);
 }
 
-
 fn s1() -> u64 {
     let mut n = vec![1];
 
@@ -38,52 +37,59 @@ fn carry(n: &mut Vec<u64>) {
         adv = _ni / 10;
         *ni = _ni % 10;
     }
-    while adv > 9 { 
-        n.push(adv % 10); 
+    while adv > 9 {
+        n.push(adv % 10);
         adv /= 10;
     }
-    if adv > 0 { n.push(adv); }
+    if adv > 0 {
+        n.push(adv);
+    }
 }
-
 
 fn s2() -> u64 {
     (2..101)
-    .fold(vec![1], |fac, n| { // 1*2*...*100 
-        let mut carry = 0;
-        fac
+        .fold(vec![1], |fac, n| {
+            // 1*2*...*100
+            let mut carry = 0;
+            fac.iter()
+                .map(|x| {
+                    let _x = x * n + carry;
+                    carry = _x / 10; // carry
+                    _x % 10
+                })
+                .collect::<Vec<u64>>()
+                .apply(|f| {
+                    // apply() appends new insignificance bits
+                    // and return Vec<u64> self.
+                    f.append(
+                        &mut ((1..)
+                            .scan(carry, |state, _| match *state {
+                                x if x > 9 => {
+                                    *state /= 10;
+                                    Some(x % 10)
+                                }
+                                x @ 1..=9 => {
+                                    *state = 0;
+                                    Some(x)
+                                }
+                                _ => None,
+                            })
+                            .fuse()
+                            .collect::<Vec<u64>>()),
+                    );
+                })
+        })
         .iter()
-        .map(|x| { 
-            let _x = x * n + carry;
-            carry = _x/10; // carry
-            _x % 10 
-        })
-        .collect::<Vec<u64>>()
-        .apply(|f| { // apply() appends new insignificance bits
-                     // and return Vec<u64> self.
-            f.append(
-                &mut ( 
-                    (1..)
-                    .scan(carry, |state, _| {
-                        match *state {
-                            x if x > 9 => { *state /= 10; Some(x % 10) },
-                            x @ 1...9 => { *state = 0; Some(x) },
-                            _ => None,
-                        }
-                    })
-                    .fuse()
-                    .collect::<Vec<u64>>()
-                )
-            );
-        })
-    })
-    .iter()
-    .fold(0, |s, &x| s + x)
+        .fold(0, |s, &x| s + x)
 }
 
 // just for chaining calls
 trait Call {
     fn apply<F>(mut self, mut f: F) -> Self
-        where Self: Sized, F: FnMut(&mut Self) {
+    where
+        Self: Sized,
+        F: FnMut(&mut Self),
+    {
         f(&mut self);
         self
     }

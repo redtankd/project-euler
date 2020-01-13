@@ -1,5 +1,6 @@
 #![cfg_attr(all(feature = "nightly", test), feature(test))]
-#[cfg(all(feature = "nightly", test))] extern crate test;
+#[cfg(all(feature = "nightly", test))]
+extern crate test;
 
 extern crate project_euler;
 
@@ -13,7 +14,6 @@ fn main() {
 
     stop_timer(t);
 }
-
 
 fn s1() -> u32 {
     let mut sum_all = 0;
@@ -36,8 +36,8 @@ fn s1() -> u32 {
 
 #[cfg(all(feature = "nightly", test))]
 mod benchs {
-    use test::Bencher;
     use super::s1;
+    use test::Bencher;
 
     #[bench]
     fn bench_s1(b: &mut Bencher) {

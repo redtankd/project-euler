@@ -1,5 +1,6 @@
 #![cfg_attr(all(feature = "nightly", test), feature(test))]
-#[cfg(all(feature = "nightly", test))] extern crate test;
+#[cfg(all(feature = "nightly", test))]
+extern crate test;
 
 extern crate project_euler;
 
@@ -20,42 +21,47 @@ fn s1(max: usize) -> usize {
     let mut dir_cur = 0;
     let mut matrix = vec![vec![0; max]; max];
 
-    for i in 1..max*max+1 {
+    for i in 1..max * max + 1 {
         matrix[pos_x][pos_y] = i;
         match dir_cur {
-            1 => { // 1 means right. next want to down
-                if matrix[pos_x][pos_y+1] == 0 {
+            1 => {
+                // 1 means right. next want to down
+                if matrix[pos_x][pos_y + 1] == 0 {
                     dir_cur = 2;
                     pos_y = pos_y + 1;
                 } else {
                     pos_x = pos_x + 1;
                 }
             }
-            2 => { // 2 means down. next want to left
-                if matrix[pos_x-1][pos_y] == 0 {
+            2 => {
+                // 2 means down. next want to left
+                if matrix[pos_x - 1][pos_y] == 0 {
                     dir_cur = 3;
                     pos_x = pos_x - 1;
                 } else {
                     pos_y = pos_y + 1;
                 }
             }
-            3 => { // 3 means left. next want to up
-                if matrix[pos_x][pos_y-1] == 0 {
+            3 => {
+                // 3 means left. next want to up
+                if matrix[pos_x][pos_y - 1] == 0 {
                     dir_cur = 4;
                     pos_y = pos_y - 1;
                 } else {
                     pos_x = pos_x - 1;
                 }
             }
-            4 => { // 4 means up. next want to right
-                if matrix[pos_x+1][pos_y] == 0 {
+            4 => {
+                // 4 means up. next want to right
+                if matrix[pos_x + 1][pos_y] == 0 {
                     dir_cur = 1;
                     pos_x = pos_x + 1;
                 } else {
                     pos_y = pos_y - 1;
                 }
             }
-            _ => { // starting point
+            _ => {
+                // starting point
                 dir_cur = 1;
                 pos_x = pos_x + 1;
             }
@@ -64,10 +70,10 @@ fn s1(max: usize) -> usize {
 
     let mut sum = 0;
     for i in 0..max {
-        sum += matrix[i][i] + matrix[max-i-1][i];
+        sum += matrix[i][i] + matrix[max - i - 1][i];
     }
     sum -= 1;
-        
+
     return sum;
 }
 

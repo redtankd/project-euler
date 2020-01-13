@@ -9,8 +9,10 @@ fn main() {
 
     for i in (100..1000).rev() {
         for j in (100..i).rev() {
-            let p = i*j;
-            if p < max.0 { continue; }
+            let p = i * j;
+            if p < max.0 {
+                continue;
+            }
             let str = p.to_string();
             let strs = &str;
             if strs.chars().rev().collect::<String>() == str {

@@ -1,8 +1,8 @@
 extern crate project_euler;
 
+use std::fs::File;
 use std::io::prelude::*;
 use std::io::BufReader;
-use std::fs::File;
 
 use project_euler::*;
 
@@ -27,16 +27,15 @@ fn s1(name: &str) -> u64 {
         .collect::<Vec<&str>>();
     s.sort();
     s.iter()
-    .enumerate()
-    .map(|(p, &x)| 
-        x
-        .as_bytes()
-        .iter()
-        .map(|&x| x as u64 - 64)
+        .enumerate()
+        .map(|(p, &x)| {
+            x.as_bytes()
+                .iter()
+                .map(|&x| x as u64 - 64)
+                .fold(0, |sum, x| sum + x)
+                * (p as u64 + 1)
+        })
         .fold(0, |sum, x| sum + x)
-        * (p as u64 + 1)
-    )
-    .fold(0, |sum, x| sum + x)
 }
 
 #[test]

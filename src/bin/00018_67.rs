@@ -1,8 +1,8 @@
 extern crate project_euler;
 
+use std::fs::File;
 use std::io::prelude::*;
 use std::io::BufReader;
-use std::fs::File;
 use std::str::FromStr;
 
 use project_euler::*;
@@ -69,13 +69,11 @@ fn read_file(name: &str) -> (usize, Vec<Vec<MyType>>) {
 struct Node {
     total: MyType,
     route: Vec<MyType>,
-} 
+}
 
-// search from bottom to top. 
+// search from bottom to top.
 // calculate all possible total for every element and find the maximum total.
-fn s1(line_count: usize, data_lines: Vec<Vec<MyType>>) 
-    -> (MyType, Vec<MyType>) {
-
+fn s1(line_count: usize, data_lines: Vec<Vec<MyType>>) -> (MyType, Vec<MyType>) {
     let mut last_line = Vec::<Node>::new();
     let mut current_line = Vec::<Node>::new();
 
@@ -85,18 +83,20 @@ fn s1(line_count: usize, data_lines: Vec<Vec<MyType>>)
         let ref data_line = data_lines[i];
 
         // from left to right
-        for j in 0..i+1 {
-            let mut node = Node { 
+        for j in 0..i + 1 {
+            let mut node = Node {
                 total: data_line[j],
-                route: vec![data_line[j]]
+                route: vec![data_line[j]],
             };
 
             // every element but the last line has two side to move down.
             // so find the side whose total is bigger.
-            if i < line_count-1 {
-                let max_index: usize = 
-                    if last_line[j].total > last_line[j+1].total { j } 
-                    else { j+1 };
+            if i < line_count - 1 {
+                let max_index: usize = if last_line[j].total > last_line[j + 1].total {
+                    j
+                } else {
+                    j + 1
+                };
 
                 // calculate the maximum for the current element
                 node.total += last_line[max_index].total;

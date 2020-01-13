@@ -1,4 +1,3 @@
-
 fn main() {
     let s = "73167176531330624919225119674426574742355349194934\
 96983520312774506326239578318016984801869478851843\
@@ -22,22 +21,26 @@ fn main() {
 71636269561882670428252483600823257530420752963450";
 
     let mut list = vec![];
-    for _i in 0..13 { // _i disable warn about unused variables
+    for _i in 0..13 {
+        // _i disable warn about unused variables
         list.push(0i64); // overflow in 32 bit
     }
 
-    println!("{}", s.as_bytes().iter()
-        // translated to number
-        .map(|&x| (x - 48) as i64)
-        .fold(0, |max, x| {
-            list.remove(0);
-            list.push(x);
-            let product = list.iter().fold(1, |p, &z| p*z);
-            if product > max {
-                return product;
-            } else {
-                return max;    
-            }
-        })
+    println!(
+        "{}",
+        s.as_bytes()
+            .iter()
+            // translated to number
+            .map(|&x| (x - 48) as i64)
+            .fold(0, |max, x| {
+                list.remove(0);
+                list.push(x);
+                let product = list.iter().fold(1, |p, &z| p * z);
+                if product > max {
+                    return product;
+                } else {
+                    return max;
+                }
+            })
     );
 }

@@ -23,9 +23,13 @@ fn s1() -> u16 {
             }
 
             days += if month == 2 {
-                if year % 4 == 0 { 29 } else { 28 }
+                if year % 4 == 0 {
+                    29
+                } else {
+                    28
+                }
             } else {
-                 days_of_month[month]
+                days_of_month[month]
             };
         }
     }

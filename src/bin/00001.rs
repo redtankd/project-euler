@@ -1,5 +1,6 @@
 #![cfg_attr(all(feature = "nightly", test), feature(test))]
-#[cfg(all(feature = "nightly", test))] extern crate test;
+#[cfg(all(feature = "nightly", test))]
+extern crate test;
 
 extern crate project_euler;
 
@@ -12,7 +13,7 @@ fn main() {
     println!("Solution 1 = {}", sum);
 
     println!("");
-    
+
     let t = start_timer();
     let sum = s2(1000);
     stop_timer(t);
@@ -20,7 +21,7 @@ fn main() {
 }
 
 pub fn s1(max: u64) -> u64 {
-     (1..max)
+    (1..max)
         .filter(|&x| x % 3 == 0 || x % 5 == 0)
         .fold(0, |a, b| a + b)
 }
@@ -28,7 +29,7 @@ pub fn s1(max: u64) -> u64 {
 pub fn s2(max: u64) -> u64 {
     let mut sum = 0;
     for i in 1..max {
-        if i%3 == 0 || i%5 == 0 {
+        if i % 3 == 0 || i % 5 == 0 {
             sum += i;
         }
     }

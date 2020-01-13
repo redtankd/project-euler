@@ -12,7 +12,6 @@ fn main() {
     println!("sum={}\n", s1());
 
     stop_timer(t);
-    
 
     let t = start_timer();
 
@@ -26,8 +25,8 @@ fn s1() -> u32 {
     let mut digits: Vec<u32> = vec![0; MAX_DIGITS_NUMBER];
     digits[0] = 2;
     let mut digits_num = 1;
-    
-    for _ in 0..MAX_POWER-1 {
+
+    for _ in 0..MAX_POWER - 1 {
         let mut carry = 0;
 
         for digit in digits.iter_mut().take(digits_num) {
@@ -42,14 +41,16 @@ fn s1() -> u32 {
         }
     }
 
-    digits.iter().take(digits_num).fold(0, |acc, &item| acc + item)
+    digits
+        .iter()
+        .take(digits_num)
+        .fold(0, |acc, &item| acc + item)
 }
 
 fn s2() -> u32 {
     let mut digits: Vec<u32> = vec![2, 0]; // zero is for carry.
 
-    for _ in 0..MAX_POWER-1 {
-
+    for _ in 0..MAX_POWER - 1 {
         digits = digits
             .into_iter()
             // scan() is slower than map()
@@ -57,13 +58,13 @@ fn s2() -> u32 {
             .scan(0, |carry, d| {
                 let d_new = d * 2 + *carry;
                 *carry = d_new / 10;
-                Some(d_new % 10) })
+                Some(d_new % 10)
+            })
             .collect();
 
         if *digits.last().unwrap() > 0 {
             digits.push(0);
         }
-
     }
 
     digits.iter().fold(0, |acc, &item| acc + item)

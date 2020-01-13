@@ -12,14 +12,17 @@ fn main() {
 }
 
 fn s1() -> u32 {
-    (11u32..).filter(|n| 
-        *n == n.to_string()
-            .chars()
-            .map(|c| u32::from(c)-48)
-            .map(|c| (1..c+1).fold(1, |pn, p| pn*p))
-            .sum::<u32>()
-    ).take(2)
-    .sum()
+    (11u32..)
+        .filter(|n| {
+            *n == n
+                .to_string()
+                .chars()
+                .map(|c| u32::from(c) - 48)
+                .map(|c| (1..c + 1).fold(1, |pn, p| pn * p))
+                .sum::<u32>()
+        })
+        .take(2)
+        .sum()
 }
 
 #[cfg(test)]

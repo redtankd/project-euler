@@ -27,10 +27,12 @@ fn s1() -> u32 {
             x1
         })
         .collect::<Vec<Vec<u8>>>();
-    
-    for x in ps.iter() { 
+
+    for x in ps.iter() {
         // skip if scanned
-        if *circular.get(x).unwrap() != 0u8 { continue; }
+        if *circular.get(x).unwrap() != 0u8 {
+            continue;
+        }
 
         let mut rotate = HashSet::<Vec<u8>>::new();
         let mut digits = x.clone();
@@ -44,14 +46,14 @@ fn s1() -> u32 {
             }
             rotate.insert(digits.clone());
             digits.rotate_left(1);
-        } 
+        }
 
         if all_exist {
             for x in rotate {
                 circular.insert(x.clone(), 2);
             }
         }
-    };
+    }
 
     circular.values().filter(|x| **x == 2).count() as u32
 }

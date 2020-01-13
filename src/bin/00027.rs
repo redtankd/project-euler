@@ -1,10 +1,11 @@
 #![cfg_attr(all(feature = "nightly", test), feature(test))]
-#[cfg(all(feature = "nightly", test))] extern crate test;
+#[cfg(all(feature = "nightly", test))]
+extern crate test;
 
 extern crate project_euler;
 
-use std::collections::HashSet;
 use project_euler::*;
+use std::collections::HashSet;
 
 pub type MyInt = i32;
 pub const MAX: MyInt = 20000;
@@ -14,11 +15,13 @@ fn main() {
 
     println!("\nsolution:\n");
     let (n, a, b) = s3(&primes(MAX));
-    println!("n = {}, a = {}, b={}, product of a and b = {}\n",
-             n,
-             a,
-             b,
-             a * b);
+    println!(
+        "n = {}, a = {}, b={}, product of a and b = {}\n",
+        n,
+        a,
+        b,
+        a * b
+    );
 
     stop_timer(t);
 }
@@ -26,9 +29,11 @@ fn main() {
 pub fn s1(primes: &HashSet<MyInt>) -> (usize, MyInt, MyInt) {
     (2..1001) // the loop for b
         .filter(|b| primes.contains(b)) // b must be a prime
-        .flat_map(|b| { // flattens nested structure
+        .flat_map(|b| {
+            // flattens nested structure
             (-999..1000) // the loop for a
-                .map(|a| { // map a and b to n
+                .map(|a| {
+                    // map a and b to n
                     let n = (0..)
                         .map(|n| {
                             let z = n * n + a * n + b;
@@ -48,21 +53,27 @@ pub fn s1(primes: &HashSet<MyInt>) -> (usize, MyInt, MyInt) {
         })
         .collect::<Vec<(usize, MyInt, MyInt)>>()
         .iter()
-        .fold((0, 0, 0), // find the maximum number of primes for consecutive values of n
-              |(n_max, a_max, b_max), &(n, a, b)| if n > n_max {
-                  (n, a, b)
-              } else {
-                  (n_max, a_max, b_max)
-              })
+        .fold(
+            (0, 0, 0), // find the maximum number of primes for consecutive values of n
+            |(n_max, a_max, b_max), &(n, a, b)| {
+                if n > n_max {
+                    (n, a, b)
+                } else {
+                    (n_max, a_max, b_max)
+                }
+            },
+        )
 }
 
 // there is no collect(), so the performance is best in the 3 solutions.
 pub fn s2(primes: &HashSet<MyInt>) -> (usize, MyInt, MyInt) {
     (2..1001) // the loop for b
         .filter(|b| primes.contains(b)) // b must be a prime
-        .map(|b| { // flattens nested structure
+        .map(|b| {
+            // flattens nested structure
             (-999..1000) // the loop for a
-                .map(|a| { // map a and b to n
+                .map(|a| {
+                    // map a and b to n
                     let n = (0..)
                         .map(|n| {
                             let z = n * n + a * n + b;
@@ -78,19 +89,27 @@ pub fn s2(primes: &HashSet<MyInt>) -> (usize, MyInt, MyInt) {
                         .unwrap();
                     return (n, a, b);
                 })
-                .fold((0, 0, 0), // find the maximum number of primes for consecutive values of n
-                    |(n_max, a_max, b_max), (n, a, b)| if n > n_max {
-                        (n, a, b)
-                    } else {
-                        (n_max, a_max, b_max)
-                    })
+                .fold(
+                    (0, 0, 0), // find the maximum number of primes for consecutive values of n
+                    |(n_max, a_max, b_max), (n, a, b)| {
+                        if n > n_max {
+                            (n, a, b)
+                        } else {
+                            (n_max, a_max, b_max)
+                        }
+                    },
+                )
         })
-        .fold((0, 0, 0), // find the maximum number of primes for consecutive values of n
-              |(n_max, a_max, b_max), (n, a, b)| if n > n_max {
-                  (n, a, b)
-              } else {
-                  (n_max, a_max, b_max)
-              })
+        .fold(
+            (0, 0, 0), // find the maximum number of primes for consecutive values of n
+            |(n_max, a_max, b_max), (n, a, b)| {
+                if n > n_max {
+                    (n, a, b)
+                } else {
+                    (n_max, a_max, b_max)
+                }
+            },
+        )
 }
 
 pub fn s3(primes: &HashSet<MyInt>) -> (MyInt, MyInt, MyInt) {
@@ -124,7 +143,6 @@ pub fn s3(primes: &HashSet<MyInt>) -> (MyInt, MyInt, MyInt) {
 
     return (n_max, a_max, b_max);
 }
-
 
 pub fn primes(max: MyInt) -> HashSet<MyInt> {
     let mut set = HashSet::new();

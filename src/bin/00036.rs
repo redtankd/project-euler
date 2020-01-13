@@ -17,7 +17,7 @@ fn s1() -> u32 {
             let binary = format!("{:b}", x);
             let decimal = format!("{}", x);
             decimal.chars().rev().collect::<String>() == decimal
-            && binary.chars().rev().collect::<String>() == binary
+                && binary.chars().rev().collect::<String>() == binary
         })
         .sum()
 }
