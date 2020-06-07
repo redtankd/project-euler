@@ -1,5 +1,3 @@
-sudo: required # workaround for travis
-
 language: rust
 
 cache: cargo
@@ -14,7 +12,7 @@ jobs:
     - rust: nightly
       env: 
         - CARGO_INCREMENTAL=0
-        - RUSTFLAGS="-Zprofile -Ccodegen-units=1 -Cinline-threshold=0 -Clink-dead-code -Coverflow-checks=off -Zno-landing-pads"
+        - RUSTFLAGS="-Zprofile -Ccodegen-units=1 -Copt-level=0 -Clink-dead-code -Coverflow-checks=off -Zpanic_abort_tests"
 
 addons:
   apt:
@@ -23,6 +21,8 @@ addons:
 install:
   - mkdir -p $HOME/.local/bin
   - mkdir -p $HOME/.cargo/bin
+
+  - cargo install grcov
 
 before_script: 
 
@@ -33,18 +33,15 @@ script:
 after_success:
   - |
     if [ "$TRAVIS_RUST_VERSION" = "nightly" ]; then
-      curl -L https://github.com/mozilla/grcov/releases/latest/download/grcov-linux-x86_64.tar.bz2 | tar jxf -
-
-      ./grcov . -s . -t coveralls+  --ignore "$HOME/.cargo/*" --ignore-not-existing \
+      grcov . -s . -t coveralls+ --llvm --branch --ignore-not-existing \
+        --excl-start "#\[cfg\(test\)\]" \
+        --excl-br-start "#\[cfg\(test\)\]" \
         --service-name travis-ci \
-        --service-job-number $TRAVIS_JOB_ID \
+        --service-job-id $TRAVIS_JOB_ID \
         --service-pull-request $TRAVIS_PULL_REQUEST \
         --commit-sha $TRAVIS_COMMIT \
         --vcs-branch $TRAVIS_BRANCH \
         --token $COVERALLS_REPO_TOKEN > coveralls.json
-
-      # Coveralls API requires service_job_id
-      sed -i "s%service_job_number%service_job_id%" coveralls.json
 
       curl "https://coveralls.io/api/v1/jobs" -F json_file=@coveralls.json
     fi
