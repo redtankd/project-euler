@@ -2,21 +2,19 @@
 #[cfg(all(feature = "nightly", test))]
 extern crate test;
 
-extern crate project_euler;
-
-use project_euler::*;
 use std::cmp::*;
 use std::collections::HashSet;
 use std::default::Default;
 use std::ops::*;
 
+#[cfg(not(test))]
 fn main() {
-    let t = start_timer();
+    let t = project_euler::start_timer();
 
     println!("\nsolution:");
     println!("The answer is {}\n", s1(100, 100));
 
-    stop_timer(t);
+    project_euler::stop_timer(t);
 }
 
 fn s1(a: u16, b: u64) -> usize {

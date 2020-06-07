@@ -2,17 +2,14 @@
 #[cfg(all(feature = "nightly", test))]
 extern crate test;
 
-extern crate project_euler;
-
-use project_euler::*;
-
+#[cfg(not(test))]
 fn main() {
-    let t = start_timer();
+    let t = project_euler::start_timer();
 
     println!("\nsolution:\n");
     println!("the sum of the numbers on the diagonals is {}\n", s1(1001));
 
-    stop_timer(t);
+    project_euler::stop_timer(t);
 }
 
 fn s1(max: usize) -> usize {

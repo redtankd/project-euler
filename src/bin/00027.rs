@@ -2,16 +2,14 @@
 #[cfg(all(feature = "nightly", test))]
 extern crate test;
 
-extern crate project_euler;
-
-use project_euler::*;
 use std::collections::HashSet;
 
 pub type MyInt = i32;
 pub const MAX: MyInt = 20000;
 
+#[cfg(not(test))]
 fn main() {
-    let t = start_timer();
+    let t = project_euler::start_timer();
 
     println!("\nsolution:\n");
     let (n, a, b) = s3(&primes(MAX));
@@ -23,7 +21,7 @@ fn main() {
         a * b
     );
 
-    stop_timer(t);
+    project_euler::stop_timer(t);
 }
 
 pub fn s1(primes: &HashSet<MyInt>) -> (usize, MyInt, MyInt) {

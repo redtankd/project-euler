@@ -2,13 +2,11 @@
 #[cfg(all(feature = "nightly", test))]
 extern crate test;
 
-extern crate project_euler;
-
-use project_euler::*;
 use std::collections::HashMap;
 
+#[cfg(not(test))]
 fn main() {
-    let t = start_timer();
+    let t = project_euler::start_timer();
 
     println!("");
     let (wanted, wanted_reciprocal, wanted_len) = s1(1000);
@@ -17,7 +15,7 @@ fn main() {
         wanted, wanted_reciprocal, wanted_len
     );
 
-    stop_timer(t);
+    project_euler::stop_timer(t);
 }
 
 pub fn s1(max: u16) -> (u16, String, usize) {
