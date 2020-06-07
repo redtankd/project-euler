@@ -1,5 +1,3 @@
-extern crate time;
-
 use time::precise_time_s;
 
 pub fn start_timer() -> f64 {

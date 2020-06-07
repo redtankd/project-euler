@@ -1,6 +1,6 @@
+use project_euler::primes;
 use std::collections::HashMap;
 use std::collections::HashSet;
-use project_euler::primes;
 
 #[cfg(not(test))]
 fn main() {

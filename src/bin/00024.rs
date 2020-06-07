@@ -1,8 +1,7 @@
-extern crate project_euler;
-
-use project_euler::*;
-
+#[cfg(not(test))]
 fn main() {
+    use project_euler::*;
+
     let t = start_timer();
 
     println!("\nsolution 1:\n");
@@ -47,7 +46,12 @@ fn f(level: u8, objects: Vec<u8>, p: &mut Vec<u8>, p_count: &mut u64) -> Option<
     }
 }
 
-#[test]
-fn s1_test() {
-    assert_eq!("2783915460", s1());
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn s1_test() {
+        assert_eq!("2783915460", s1());
+    }
 }

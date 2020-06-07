@@ -1,12 +1,11 @@
-extern crate project_euler;
-
 use std::fs::File;
 use std::io::prelude::*;
 use std::io::BufReader;
 
-use project_euler::*;
-
+#[cfg(not(test))]
 fn main() {
+    use project_euler::*;
+
     let t = start_timer();
 
     println!("\nsolution 1:\n");
@@ -38,7 +37,12 @@ fn s1(name: &str) -> u64 {
         .fold(0, |sum, x| sum + x)
 }
 
-#[test]
-fn s1_test() {
-    assert_eq!(871198282, s1("src/resource/00022.txt"));
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn s1_test() {
+        assert_eq!(871198282, s1("src/resource/00022.txt"));
+    }
 }

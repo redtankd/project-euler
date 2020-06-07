@@ -36,7 +36,7 @@ fn s1() -> u32 {
                     let mut str = x.to_string();
                     for _ in 1..str.len() {
                         let len = str.len() - 1;
-                        str.split_off(len);
+                        let _ = str.split_off(len);
 
                         if !primes.contains(&str.parse::<u32>().unwrap()) {
                             return Some(0);

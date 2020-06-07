@@ -1,8 +1,7 @@
-extern crate project_euler;
-
-use project_euler::*;
-
+#[cfg(not(test))]
 fn main() {
+    use project_euler::*;
+
     let t = start_timer();
 
     println!("\nsolution 1:\n");
@@ -80,12 +79,17 @@ fn add(fn_1: &Vec<u8>, fn_2: &Vec<u8>) -> Vec<u8> {
         .collect::<Vec<u8>>()
 }
 
-#[test]
-fn s1_test() {
-    assert_eq!(4782, s1());
-}
+#[cfg(test)]
+mod tests {
+    use super::*;
 
-#[test]
-fn s2_test() {
-    assert_eq!(4782, s2());
+    #[test]
+    fn s1_test() {
+        assert_eq!(4782, s1());
+    }
+
+    #[test]
+    fn s2_test() {
+        assert_eq!(4782, s2());
+    }
 }

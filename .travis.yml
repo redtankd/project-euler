@@ -28,6 +28,8 @@ before_script:
 
 script:
   - cargo build --verbose
+  # build doesn't respect #[cfg(not(test))]
+  - cargo clean -p project-euler
   - cargo test --all --verbose
 
 after_success:

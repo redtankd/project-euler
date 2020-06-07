@@ -1,8 +1,7 @@
-extern crate project_euler;
-
-use project_euler::*;
-
+#[cfg(not(test))]
 fn main() {
+    use project_euler::*;
+
     let t = start_timer();
 
     println!("\nsolution 1:\n");
@@ -53,7 +52,12 @@ fn f(x: u64) -> Vec<u64> {
         })
 }
 
-#[test]
-fn s1_test() {
-    assert_eq!(4179871, s1());
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn s1_test() {
+        assert_eq!(4179871, s1());
+    }
 }
