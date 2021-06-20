@@ -1,21 +1,18 @@
-extern crate project_euler;
-
-use project_euler::*;
-
+#[cfg(not(test))]
 fn main() {
-    let t = start_timer();
+    let t = project_euler::start_timer();
 
     println!("\nsolution 1:\n");
     println!("sum={}\n", s1());
 
-    stop_timer(t);
+    project_euler::stop_timer(t);
 
-    let t = start_timer();
+    let t = project_euler::start_timer();
 
     println!("\nsolution 2:\n");
     println!("sum={}\n", s2());
 
-    stop_timer(t);
+    project_euler::stop_timer(t);
 }
 
 fn s1() -> u64 {

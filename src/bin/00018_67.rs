@@ -1,15 +1,14 @@
-extern crate project_euler;
-
 use std::fs::File;
 use std::io::prelude::*;
 use std::io::BufReader;
 use std::str::FromStr;
 
-use project_euler::*;
-
 type MyType = i32;
 
+#[cfg(not(test))]
 fn main() {
+    use project_euler::*;
+
     let (line_count, lines) = read_file("resource/00018.txt");
 
     let t = start_timer();

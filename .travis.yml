@@ -14,16 +14,21 @@ jobs:
   include:
     - rust: nightly
       env: 
-        - CARGO_INCREMENTAL = "0"
-        - RUSTFLAGS = "-Zinstrument-coverage -Zprofile -Zpanic_abort_tests -Ccodegen-units=1 -Copt-level=0 -Clink-dead-code -Coverflow-checks=off"
-        - RUSTDOCFLAGS = "-Cpanic=abort"
+        # source-based coverage
+        - RUSTFLAGS = "-Zinstrument-coverage"
+        - LLVM_PROFILE_FILE = "coverage-%p-%m.profraw"
+        # .gcda profile
+        # - CARGO_INCREMENTAL = "0"
+        # - RUSTFLAGS = "-Zinstrument-coverage -Zprofile -Zpanic_abort_tests -Ccodegen-units=1 -Copt-level=0 -Clink-dead-code -Coverflow-checks=off"
+        # - RUSTDOCFLAGS = "-Cpanic=abort"
 
 before_install:
   - mkdir -p $HOME/.local/bin
   - mkdir -p $HOME/.cargo/bin
 
 install:
-  - cargo install grcov
+  - rustup component add llvm-tools-preview
+  - cargo install grcov --force
 
 before_script: 
 
@@ -36,7 +41,7 @@ script:
 after_success:
   - |
     if [ "$TRAVIS_RUST_VERSION" = "nightly" ]; then
-      grcov . -s . -t coveralls+ --llvm --branch --ignore-not-existing \
+      grcov . -s . --binary-path ./target/debug/ -t coveralls+ --llvm --branch --ignore-not-existing \
         --excl-start "#\[cfg\(test\)\]" \
         --excl-br-start "#\[cfg\(test\)\]" \
         --service-name travis-ci \
