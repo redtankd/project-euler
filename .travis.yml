@@ -15,12 +15,12 @@ jobs:
     - rust: nightly
       env: 
         # source-based coverage
-        - RUSTFLAGS = "-Zinstrument-coverage"
-        - LLVM_PROFILE_FILE = "coverage-%p-%m.profraw"
+        - RUSTFLAGS="-Zinstrument-coverage"
+        - LLVM_PROFILE_FILE="coverage-%p-%m.profraw"
         # .gcda profile
-        # - CARGO_INCREMENTAL = "0"
-        # - RUSTFLAGS = "-Zinstrument-coverage -Zprofile -Zpanic_abort_tests -Ccodegen-units=1 -Copt-level=0 -Clink-dead-code -Coverflow-checks=off"
-        # - RUSTDOCFLAGS = "-Cpanic=abort"
+        # - CARGO_INCREMENTAL="0"
+        # - RUSTFLAGS="-Zinstrument-coverage -Zprofile -Zpanic_abort_tests -Ccodegen-units=1 -Copt-level=0 -Clink-dead-code -Coverflow-checks=off"
+        # - RUSTDOCFLAGS="-Cpanic=abort"
 
 before_install:
   - mkdir -p $HOME/.local/bin
