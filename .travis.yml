@@ -1,9 +1,12 @@
-# the default dist doesn't support grcov, so ubuntu 20.4 is used.
+os: linux
+
+arch:
+  - arm64
+
+  # the default dist doesn't support grcov, so ubuntu 20.4 is used.
 dist: focal
 
 language: rust
-
-cache: cargo
 
 env:
   global:
@@ -21,6 +24,8 @@ jobs:
         # - CARGO_INCREMENTAL="0"
         # - RUSTFLAGS="-Zinstrument-coverage -Zprofile -Zpanic_abort_tests -Ccodegen-units=1 -Copt-level=0 -Clink-dead-code -Coverflow-checks=off"
         # - RUSTDOCFLAGS="-Cpanic=abort"
+
+cache: cargo
 
 before_install:
   - mkdir -p $HOME/.local/bin
