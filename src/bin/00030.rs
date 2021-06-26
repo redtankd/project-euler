@@ -31,6 +31,16 @@ fn s1() -> u32 {
     return sum_all;
 }
 
+#[cfg(test)]
+mod tests {
+    use super::s1;
+
+    #[test]
+    fn test_s1() {
+        assert_eq!(443_839, s1());
+    }
+}
+
 #[cfg(all(feature = "nightly", test))]
 mod benchs {
     use super::s1;

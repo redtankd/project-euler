@@ -1,4 +1,5 @@
 #![cfg_attr(all(feature = "nightly", test), feature(test))]
+
 #[cfg(all(feature = "nightly", test))]
 extern crate test;
 
@@ -83,6 +84,12 @@ where
 mod tests {
     use super::carry;
     use super::pow;
+    use super::s1;
+
+    #[test]
+    fn test_s1() {
+        assert_eq!(9183, s1(100, 100));
+    }
 
     #[test]
     fn test_carry() {
