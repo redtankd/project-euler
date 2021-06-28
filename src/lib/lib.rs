@@ -9,28 +9,15 @@ pub fn stop_timer(t: f64) {
     println!("time elapse {} second", precise_time_s() - t);
 }
 
-pub fn primes() -> impl Iterator<Item = u32> {
-    (2..)
-        .scan(Vec::<u32>::new(), |state, x| {
-            if state
-                .iter()
-                .take_while(|&y| *y <= x / 2)
-                .all(|&y| x % y != 0)
-            {
-                state.push(x);
-                Some(x)
-            } else {
-                Some(0)
-            }
-        })
-        .filter(|&x| x != 0)
+pub fn primes() -> impl Iterator<Item = u64> {
+    (2u64..).filter(|&x| is_prime(x))
 }
 
 /**
-    费马小定理，这是一个质数的必要非充分条件。
+   费马小定理，这是一个质数的必要非充分条件。
 
-    可以使用“二次检验定理”，提高正确性
- */
+   可以使用“二次检验定理”，提高正确性
+*/
 pub fn is_prime(n: u64) -> bool {
     if n <= 1 {
         return false;

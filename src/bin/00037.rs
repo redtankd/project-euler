@@ -1,5 +1,7 @@
 use std::collections::BTreeSet;
 
+use project_euler::is_prime;
+
 #[cfg(not(test))]
 fn main() {
     let t = project_euler::start_timer();
@@ -14,12 +16,8 @@ fn s1() -> u32 {
     (11..)
         .scan(
             vec![2, 3, 5, 7].into_iter().collect::<BTreeSet<u32>>(),
-            |primes, x| {
-                if primes
-                    .iter()
-                    .take_while(|&y| *y <= x / 2)
-                    .all(|&y| x % y != 0)
-                {
+            |primes, x: u32| {
+                if is_prime(x as u64) {
                     primes.insert(x);
 
                     // truncate from left to right
