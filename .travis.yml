@@ -1,9 +1,11 @@
+# Partner Queue Solution, which can be used completely for free.
+# https://docs.travis-ci.com/user/billing-overview/#partner-queue-solution
 os: linux
 
 arch:
   - arm64
 
-  # the default dist doesn't support grcov, so ubuntu 20.4 is used.
+# the default dist doesn't support grcov, so ubuntu 20.4 is used.
 dist: focal
 
 language: rust
@@ -16,7 +18,7 @@ env:
 jobs:
   include:
     - rust: nightly
-      env: 
+      env:
         # source-based coverage
         - RUSTFLAGS="-Zinstrument-coverage"
         - LLVM_PROFILE_FILE="coverage-%p-%m.profraw"
@@ -33,14 +35,12 @@ before_install:
 
 install:
   - rustup component add llvm-tools-preview
-  - cargo install grcov --force
+  - cargo install grcov
 
 before_script: 
 
 script:
   - cargo build --verbose
-  # build doesn't respect #[cfg(not(test))]
-  - cargo clean -p project-euler
   - cargo test --all --verbose
 
 after_success:
